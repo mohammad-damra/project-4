@@ -15,11 +15,17 @@ const posts = [
     author: 'amr',
     },
     ];
-
+let last_ID=3;
 const getAllPosts = (req, res) => {
+    res.json(posts);
+  };
+  const createNewPost = (req, res) => {
+    posts.push(req.body);
     res.json(posts);
   };
 
   module.exports= {
-    getAllPosts
+    getAllPosts,
+    createNewPost,
+    last_ID
   };
