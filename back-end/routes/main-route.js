@@ -5,5 +5,5 @@ const {getAllArticles,createNewArticle,deleteArticleByID,changeArticleTitle} = r
 mainRouter.get('/articles', getAllArticles);
 mainRouter.post('/articles', createNewArticle);
 mainRouter.delete('/articles/:id', deleteArticleByID);
-mainRouter.put('/articles/:id/:title', changeArticleTitle);
+mainRouter.put('/articles/:id/:newTitle', changeArticleTitle);
 module.exports = mainRouter;
