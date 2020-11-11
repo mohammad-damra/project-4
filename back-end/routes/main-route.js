@@ -1,7 +1,9 @@
 const express = require('express');
 const mainRouter = express.Router();
-const {getAllPosts,createNewPost} = require('../controllers/main-controller');
+const {getAllArticles,createNewArticle,deleteArticleByID,changeArticleTitle} = require('../controllers/main-controller');
 
-mainRouter.get('/posts', getAllPosts);
-mainRouter.post('/posts', createNewPost);
+mainRouter.get('/articles', getAllArticles);
+mainRouter.post('/articles', createNewArticle);
+mainRouter.delete('/articles/:id', deleteArticleByID);
+mainRouter.put('/articles/:id/:title', changeArticleTitle);
 module.exports = mainRouter;

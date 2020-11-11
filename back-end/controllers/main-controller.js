@@ -1,31 +1,43 @@
-const posts = [
-    {
-    title: 'eat fried chicken',
-    body: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.',
-    author: 'jouza',
-    },
-    {
-    title: 'how to studey react',
-    body: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit.',
-    author: 'abd',
-    },
-    {
-    title: 'how to vote',
-    body: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit',
-    author: 'amr',
-    },
-    ];
-let last_ID=3;
-const getAllPosts = (req, res) => {
-    res.json(posts);
-  };
-  const createNewPost = (req, res) => {
-    posts.push(req.body);
-    res.json(posts);
-  };
+const articles = [
+  {
+    id: 1,
+    title: "eat fried chicken",
+    description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
+    author: "jouza",
+  },
+  {
+    id: 2,
+    title: "how to studey react",
+    description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
+    author: "abd",
+  },
+  {
+    id: 3,
+    title: "how to vote",
+    description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit",
+    author: "amr",
+  },
+];
+let last_ID = 3;
+const getAllArticles = (req, res) => {
+  res.json(articles);
+};
+const createNewArticle = (req, res) => {
+  req.body.id = ++last_ID;
+  posts.push(req.body);
+  res.json(articles);
+};
+const deleteArticleByID = (req, res) => {
+  posts.pop();
+  res.json(articles);
+};
+const changeArticleTitle = (req, res) => {
+  res.json(articles);
+};
 
-  module.exports= {
-    getAllPosts,
-    createNewPost,
-    last_ID
-  };
+module.exports = {
+  getAllArticles,
+  createNewArticle,
+  deleteArticleByID,
+  changeArticleTitle,
+};
