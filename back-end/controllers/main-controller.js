@@ -1,4 +1,4 @@
-const articles = [
+let articles = [
   {
     id: 1,
     title: "eat fried chicken",
@@ -9,13 +9,13 @@ const articles = [
     id: 4,
     title: "how to studey react",
     description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
-    author: "abd",
+    author: "amr",
   },
   {
     id: 7,
     title: "how to vote",
     description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit",
-    author: "amr",
+    author: "jouza",
   },
 ];
 let last_ID = 7;
@@ -35,14 +35,41 @@ const changeArticleTitle = (req, res) => {
   }
   res.json(articles);
 };
-const deleteArticleByID = (req, res) => {
-  posts.pop();
+const changeArticleAuthorById = (req, res) => {
+  for (let i = 0; i < articles.length; i++) {
+    if (req.params.id == articles[i].id) {
+      articles[i].author = req.body.newAuthor;
+    }
+  }
   res.json(articles);
 };
-
+const deleteArticleByID = (req, res) => {
+  for (let i = 0; i < articles.length; i++) {
+    if (req.params.id == articles[i].id) {
+      articles.splice(i, 1);
+    }
+  }
+  res.json(articles);
+};
+/*const deleteArticleByAuthor = (req, res) => {
+  for (let i = 0; i < articles.length; i++) {
+    if (req.body.author === articles[i].author) {
+      articles.splice(i, 1);
+       i--;
+    }
+  }
+  res.json(articles);
+};*/
+const deleteArticleByAuthor = (req, res) => {
+  articles = articles.filter(({ author }) => author !== req.body.author);
+  res.json(articles);
+};
 module.exports = {
   getAllArticles,
   createNewArticle,
+  changeArticleTitle,
+  changeArticleAuthorById,
   deleteArticleByID,
   changeArticleTitle,
+  deleteArticleByAuthor,
 };
