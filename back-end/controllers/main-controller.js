@@ -1,25 +1,5 @@
 const connection = require("../db");
-// let articles = [
-//   {
-//     id: 1,
-//     title: "eat fried chicken",
-//     description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
-//     author: "jouza",
-//   },
-//   {
-//     id: 4,
-//     title: "how to studey react",
-//     description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.",
-//     author: "amr",
-//   },
-//   {
-//     id: 7,
-//     title: "how to vote",
-//     description: "Lorem ipsum dolor sit amet consectetur, adipisicing elit",
-//     author: "jouza",
-//   },
-// ];
-let last_ID = 7;
+// Express Functions
 const getAllArticles_Express = (req, res) => {
   res.json(articles);
 };
@@ -53,27 +33,29 @@ const deleteArticleByID_Express = (req, res) => {
   res.json(articles);
 };
 const deleteArticleByAuthor_Express = (req, res) => {
+  //with filter method
   articles = articles.filter(({ author }) => author !== req.body.author);
   res.json(articles);
+  //without filter
+  // for (let i = 0; i < articles.length; i++) {
+  //   if (req.body.author === articles[i].author) {
+  //     articles.splice(i, 1);
+  //      i--;
+  //   }
+  // }
+  // res.json(articles);
 };
-/*const deleteArticleByAuthor_Express = (req, res) => {
-  for (let i = 0; i < articles.length; i++) {
-    if (req.body.author === articles[i].author) {
-      articles.splice(i, 1);
-       i--;
-    }
-  }
-  res.json(articles);
-};*/
+// MySQL Functions
+
 const getAllArticles = (req, res) => {
-  const query = `SELECT * FROM articles`;
+  const query = `SELECT * FROM articles where is_deleted = 0`;
   connection.query(query, (err, result) => {
     if (err) throw err;
     res.json(result);
   });
 };
 const createNewArticle = (req, res) => {
-  const {title,description,author}=req.body;
+  const { title, description, author } = req.body;
   const query = `INSERT INTO articles (title,description,author)
    VALUES ("${title}","${description}","${author}") `;
   connection.query(query, (err, result) => {
@@ -82,47 +64,70 @@ const createNewArticle = (req, res) => {
   });
 };
 const changeArticleTitle = (req, res) => {
-  const {id,newTitle}=req.params;
+  const { id, newTitle } = req.params;
   const query = `UPDATE articles 
   SET 
   title = "${newTitle}"
   where
   id= ${id}`;
- connection.query(query, (err, result) => {
-   if (err) throw err;
-   res.json(result);
- });
+  connection.query(query, (err, result) => {
+    if (err) throw err;
+    res.json(result);
+  });
 };
 const changeArticleAuthorById = (req, res) => {
-  const {id}=req.params;
-  const {newAuthor}=req.body;
+  const { id } = req.params;
+  const { newAuthor } = req.body;
   const query = `UPDATE articles 
   SET 
   author = "${newAuthor}"
   where
   id= ${id}`;
- connection.query(query, (err, result) => {
-   if (err) throw err;
-   res.json(result);
- });
+  connection.query(query, (err, result) => {
+    if (err) throw err;
+    res.json(result);
+  });
 };
 const deleteArticleByID = (req, res) => {
-  const {id}=req.params;
-  const query = `DELETE FROM articles
-  where id= ${id}`;
- connection.query(query, (err, result) => {
-   if (err) throw err;
-   res.json(result);
- });
+  //Soft Delete
+  const { id } = req.params;
+  const query = `UPDATE articles 
+  SET 
+  is_deleted = 1
+  where
+  id= ${id}`;
+  connection.query(query, (err, result) => {
+    if (err) throw err;
+    res.json(result);
+  });
+  //   //Hard Delete
+//   const { id } = req.params;
+//   const query = `DELETE FROM articles
+//   where id= ${id}`;
+//   connection.query(query, (err, result) => {
+//     if (err) throw err;
+//     res.json(result);
+//   });
 };
 const deleteArticleByAuthor = (req, res) => {
-  const {author}=req.body;
-  const query = `DELETE FROM articles
-  where author= "${author}"`;
- connection.query(query, (err, result) => {
-   if (err) throw err;
-   res.json(result);
- });
+  const { author } = req.body;
+  const query = `UPDATE articles 
+  SET 
+  is_deleted = 1
+  where
+  author= "${author}"`;
+  connection.query(query, (err, result) => {
+    if (err) throw err;
+    res.json(result);
+  });
+  // Hard Delete
+  // const { author } = req.body;
+  // const query = `DELETE FROM articles
+  // where author= "${author}"`;
+  // connection.query(query, (err, result) => {
+  //   if (err) throw err;
+  //   res.json(result);
+  // });
 };
 module.exports = {
   getAllArticles,

@@ -6,7 +6,7 @@ const {
   changeArticleTitle,
   changeArticleAuthorById,
   deleteArticleByID,
-  deleteArticleByAuthor
+  deleteArticleByAuthor,
 } = require("../controllers/main-controller");
 
 mainRouter.get("/articles", getAllArticles);
