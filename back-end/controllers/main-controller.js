@@ -101,13 +101,13 @@ const deleteArticleByID = (req, res) => {
     res.json(result);
   });
   //   //Hard Delete
-//   const { id } = req.params;
-//   const query = `DELETE FROM articles
-//   where id= ${id}`;
-//   connection.query(query, (err, result) => {
-//     if (err) throw err;
-//     res.json(result);
-//   });
+  //   const { id } = req.params;
+  //   const query = `DELETE FROM articles
+  //   where id= ${id}`;
+  //   connection.query(query, (err, result) => {
+  //     if (err) throw err;
+  //     res.json(result);
+  //   });
 };
 const deleteArticleByAuthor = (req, res) => {
   const { author } = req.body;
@@ -129,6 +129,41 @@ const deleteArticleByAuthor = (req, res) => {
   //   res.json(result);
   // });
 };
+
+//Extra End Points.
+const getAllArticlesByAuthor = (req, res) => {
+  const { author } = req.body;
+  const query = `SELECT * FROM articles where is_deleted = 0 AND author="${author}"`;
+  connection.query(query, (err, result) => {
+    if (err) throw err;
+    res.json(result);
+  });
+};
+const changeArticleDescriptionById = (req, res) => {
+  const { id } = req.params;
+  const { newDescription } = req.body;
+  const query = `UPDATE articles 
+  SET 
+  description = "${newDescription}"
+  where
+  id= ${id}`;
+  connection.query(query, (err, result) => {
+    if (err) throw err;
+    res.json(result);
+  });
+};
+const recoverDeletedArticleByID = (req, res) => {
+  const { id } = req.params;
+  const query = `UPDATE articles 
+  SET 
+  is_deleted = 0
+  where
+  id= ${id}`;
+  connection.query(query, (err, result) => {
+    if (err) throw err;
+    res.json(result);
+  });
+};
 module.exports = {
   getAllArticles,
   createNewArticle,
@@ -137,4 +172,7 @@ module.exports = {
   deleteArticleByID,
   changeArticleTitle,
   deleteArticleByAuthor,
+  getAllArticlesByAuthor,
+  changeArticleDescriptionById,
+  recoverDeletedArticleByID,
 };

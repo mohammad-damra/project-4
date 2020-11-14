@@ -7,6 +7,9 @@ const {
   changeArticleAuthorById,
   deleteArticleByID,
   deleteArticleByAuthor,
+  getAllArticlesByAuthor,
+  changeArticleDescriptionById,
+  recoverDeletedArticleByID
 } = require("../controllers/main-controller");
 
 mainRouter.get("/articles", getAllArticles);
@@ -15,4 +18,8 @@ mainRouter.delete("/articles/:id", deleteArticleByID);
 mainRouter.put("/articles/:id/:newTitle", changeArticleTitle);
 mainRouter.put("/articles/:id", changeArticleAuthorById);
 mainRouter.delete("/articles", deleteArticleByAuthor);
+//extra End points
+mainRouter.get("/articlesByAuthor", getAllArticlesByAuthor);
+mainRouter.put("/articlesDescription/:id", changeArticleDescriptionById);
+mainRouter.delete("/recoverArticles/:id", recoverDeletedArticleByID);
 module.exports = mainRouter;
