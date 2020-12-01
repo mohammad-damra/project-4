@@ -21,5 +21,23 @@ mainRouter.delete("/articles", deleteArticleByAuthor);
 //extra End points
 mainRouter.get("/articlesByAuthor", getAllArticlesByAuthor);
 mainRouter.put("/articlesDescription/:id", changeArticleDescriptionById);
-mainRouter.delete("/recoverArticles/:id", recoverDeletedArticleByID);
+mainRouter.get("/recoverArticles/:id", recoverDeletedArticleByID);
 module.exports = mainRouter;
+
+
+/*
+CREATE TABLE users (
+    user_id int AUTO_INCREMENT NOT NULL,
+    email varchar(50),
+    password int(25),
+    PRIMARY KEY (user_id), 
+    FOREIGN KEY (user_id)
+    REFERENCES users(user_id)
+);
+ALTER TABLE articles
+FOREIGN KEY (user_id) REFERENCES users(user_id);
+ALTER TABLE articles
+DROP COLUMN user_id;
+ALTER TABLE articles
+ADD FOREIGN KEY (userId) REFERENCES users(user_id);
+*/

@@ -6,12 +6,6 @@ import './App.css';
 import axios from 'axios';
 
 export default function App() {
-	// just for study
-	const [ count, setCount ] = useState(0);
-	const add1 = () => {
-		setCount(count + 1);
-	};
-
 	const [ articles, setArticles ] = useState([]);
 
 	const getAllArticles = () => {
@@ -33,16 +27,9 @@ export default function App() {
 
 	return (
 		<div className="app">
-			<h3>APP 1+1 {1 + 1}</h3>
-			{/* just for study this two lines */}
-
-			<h1>Count is: {count} </h1>
-			<button onClick={add1}>Add 1 to the counter</button>
-
+			<h1>TODO LIST</h1>
 			<button onClick={getAllArticles}>GET ARTICLES</button>
-
 			<NewItem getArticles={getAllArticles} />
-
 			{renderArticles}
 		</div>
 	);

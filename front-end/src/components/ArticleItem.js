@@ -8,7 +8,7 @@ export default function ArticleItem(props) {
 		axios
 			.delete(`http://localhost:5000/articles/${id}`)
 			.then((response) => {
-				if (response.state === 200) {
+				if (response.status === 200) {
 					props.getArticles();
 				}
 			})
